@@ -29,10 +29,10 @@ public class OpenApiConfig {
     return group("hello", "/hello");
   }
 
-  //@Bean
-  //public GroupedOpenApi usersApi() {
-  //  return group("users", "/users", "/users/**");
-  //}
+  @Bean
+  public GroupedOpenApi usersApi() {
+    return group("users", "/users", "/users/**");
+  }
 
   private GroupedOpenApi group(String name, String... paths) {
     return GroupedOpenApi.builder().group(name).pathsToMatch(paths).build();
