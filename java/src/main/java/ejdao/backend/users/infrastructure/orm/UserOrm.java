@@ -1,4 +1,4 @@
-package ejdao.backend.users;
+package ejdao.backend.users.infrastructure.orm;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class UserOrm {
 
   @Id
   @Column(name = "ID")

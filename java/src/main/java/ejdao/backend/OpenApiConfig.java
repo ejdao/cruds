@@ -19,16 +19,6 @@ public class OpenApiConfig {
     );
   }
 
-  //@Bean
-  //public GroupedOpenApi allApi() {
-  //  return group("all", "/**");
-  //}
-
-  @Bean
-  public GroupedOpenApi helloApi() {
-    return group("hello", "/hello");
-  }
-
   @Bean
   public GroupedOpenApi usersApi() {
     return group("users", "/users", "/users/**");
