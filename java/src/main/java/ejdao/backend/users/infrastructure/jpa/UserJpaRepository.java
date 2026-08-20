@@ -4,6 +4,6 @@ import ejdao.backend.users.infrastructure.orm.UserOrm;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserJpaRepository extends JpaRepository<UserOrm, Integer> {
-
   boolean existsByDocument(String document);
+  boolean existsByDocumentAndIdNot(String document, Integer id);
 }

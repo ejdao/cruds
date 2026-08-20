@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 public class UserOrmToUserResponse {
 
   public UserResponse map(UserOrm user) {
-    return new UserResponse(user.getId(), user.getDocument(), user.getFullName());
+    return new UserResponse(
+      user.getId(),
+      user.getDocument(),
+      user.getFullName()
+    );
   }
 }
