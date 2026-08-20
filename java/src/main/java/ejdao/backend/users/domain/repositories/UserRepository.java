@@ -9,6 +9,7 @@ public interface UserRepository {
   List<UserResponse> fetch();
   UserResponse create(UserCreateRequest request);
   UserResponse update(Integer id, UserUpdateRequest request);
+  void delete(Integer id);
   boolean existsByDocument(String document);
   boolean existsByDocumentAndIdNot(String document, Integer id);
   boolean existsById(Integer id);

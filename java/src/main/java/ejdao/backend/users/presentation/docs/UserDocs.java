@@ -47,4 +47,18 @@ public interface UserDocs {
     }
   )
   UserResponse updateUser(Integer id, UserUpdateRequest request);
+
+  @Operation(
+    summary = "Delete a user",
+    responses = {
+      @ApiResponse(
+        responseCode = "204",
+        description = "User deleted successfully"
+      ),
+      @ApiResponse(responseCode = "400", description = "Invalid user id"),
+      @ApiResponse(responseCode = "404", description = "User not found"),
+      @ApiResponse(responseCode = "500", description = "Could not delete user"),
+    }
+  )
+  void deleteUser(Integer id);
 }

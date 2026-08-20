@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "USERS")
@@ -24,6 +25,9 @@ public class UserOrm {
 
   @Column(name = "USUPASSWOR", length = 255)
   private String password;
+
+  @Column(name = "DELETEDAT")
+  private LocalDateTime deletedAt;
 
   public Integer getId() {
     return id;
@@ -55,5 +59,13 @@ public class UserOrm {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public LocalDateTime getDeletedAt() {
+    return deletedAt;
+  }
+
+  public void setDeletedAt(LocalDateTime deletedAt) {
+    this.deletedAt = deletedAt;
   }
 }

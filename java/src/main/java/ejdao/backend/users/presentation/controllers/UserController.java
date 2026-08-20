@@ -7,6 +7,7 @@ import ejdao.backend.users.presentation.docs.UserDocs;
 import ejdao.backend.users.presentation.handlers.UserHandler;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +45,12 @@ public class UserController implements UserDocs {
     @RequestBody UserUpdateRequest request
   ) {
     return userHandler.update(id, request);
+  }
+
+  @Override
+  @DeleteMapping("/users/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteUser(@PathVariable Integer id) {
+    userHandler.delete(id);
   }
 }

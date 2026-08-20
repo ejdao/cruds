@@ -75,6 +75,21 @@ public class UserHandler {
     }
   }
 
+  public void delete(Integer id) {
+    validateDeleteRequest(id);
+
+    try {
+      validateExistingUser(id);
+      userRepository.delete(id);
+    } catch (DataAccessException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "Could not delete user.",
+        exception
+      );
+    }
+  }
+
   private void validateUniqueDocument(String document) {
     if (userRepository.existsByDocument(document)) {
       throw new ResponseStatusException(
@@ -151,6 +166,15 @@ public class UserHandler {
       throw new ResponseStatusException(
         HttpStatus.BAD_REQUEST,
         "User full name is required."
+      );
+    }
+  }
+
+  private void validateDeleteRequest(Integer id) {
+    if (id == null) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST,
+        "User id is required."
       );
     }
   }

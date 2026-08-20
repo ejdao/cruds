@@ -8,6 +8,7 @@ import ejdao.backend.users.infrastructure.factories.UserCreateRequestToUserOrm;
 import ejdao.backend.users.infrastructure.factories.UserOrmToUserResponse;
 import ejdao.backend.users.infrastructure.factories.UserUpdateRequestToUserOrm;
 import ejdao.backend.users.infrastructure.jpa.UserJpaRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,7 @@ public class UserSource implements UserRepository {
   @Override
   public List<UserResponse> fetch() {
     return userJpaRepository
-      .findAll()
+      .findAllByDeletedAtIsNull()
       .stream()
       .map(userOrmToUserResponse::map)
       .toList();
@@ -50,7 +51,7 @@ public class UserSource implements UserRepository {
   @Override
   public UserResponse update(Integer id, UserUpdateRequest request) {
     return userJpaRepository
-      .findById(id)
+      .findByIdAndDeletedAtIsNull(id)
       .map(user -> userUpdateRequestToUserOrm.map(request, user))
       .map(userJpaRepository::save)
       .map(userOrmToUserResponse::map)
@@ -58,17 +59,31 @@ public class UserSource implements UserRepository {
   }
 
   @Override
+  public void delete(Integer id) {
+    userJpaRepository
+      .findByIdAndDeletedAtIsNull(id)
+      .map(user -> {
+        user.setDeletedAt(LocalDateTime.now());
+        return userJpaRepository.save(user);
+      })
+      .orElseThrow();
+  }
+
+  @Override
   public boolean existsByDocument(String document) {
-    return userJpaRepository.existsByDocument(document);
+    return userJpaRepository.existsByDocumentAndDeletedAtIsNull(document);
   }
 
   @Override
   public boolean existsByDocumentAndIdNot(String document, Integer id) {
-    return userJpaRepository.existsByDocumentAndIdNot(document, id);
+    return userJpaRepository.existsByDocumentAndIdNotAndDeletedAtIsNull(
+      document,
+      id
+    );
   }
 
   @Override
   public boolean existsById(Integer id) {
-    return userJpaRepository.existsById(id);
+    return userJpaRepository.existsByIdAndDeletedAtIsNull(id);
   }
 }
