@@ -124,20 +124,6 @@ public class UserHandler {
         "User body is required."
       );
     }
-
-    if (request.getDocument() == null || request.getDocument().isBlank()) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "User document is required."
-      );
-    }
-
-    if (request.getFullName() == null || request.getFullName().isBlank()) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "User full name is required."
-      );
-    }
   }
 
   private void validateUpdateRequest(Integer id, UserUpdateRequest request) {
@@ -152,20 +138,6 @@ public class UserHandler {
       throw new ResponseStatusException(
         HttpStatus.BAD_REQUEST,
         "User body is required."
-      );
-    }
-
-    if (request.getDocument() == null || request.getDocument().isBlank()) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "User document is required."
-      );
-    }
-
-    if (request.getFullName() == null || request.getFullName().isBlank()) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "User full name is required."
       );
     }
   }

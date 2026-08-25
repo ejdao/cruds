@@ -2,10 +2,14 @@ package ejdao.backend.users.application.requests;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 
 public class UserCreateRequest {
 
+  @NotBlank(message = "User document is required.")
   private final String document;
+
+  @NotBlank(message = "User full name is required.")
   private final String fullName;
 
   @JsonCreator

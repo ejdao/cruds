@@ -5,6 +5,7 @@ import ejdao.backend.users.application.requests.UserUpdateRequest;
 import ejdao.backend.users.application.responses.UserResponse;
 import ejdao.backend.users.presentation.docs.UserDocs;
 import ejdao.backend.users.presentation.handlers.UserHandler;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +35,9 @@ public class UserController implements UserDocs {
   @Override
   @PostMapping("/users")
   @ResponseStatus(HttpStatus.CREATED)
-  public UserResponse createUser(@RequestBody UserCreateRequest request) {
+  public UserResponse createUser(
+    @Valid @RequestBody UserCreateRequest request
+  ) {
     return userHandler.create(request);
   }
 
@@ -42,7 +45,7 @@ public class UserController implements UserDocs {
   @PutMapping("/users/{id}")
   public UserResponse updateUser(
     @PathVariable Integer id,
-    @RequestBody UserUpdateRequest request
+    @Valid @RequestBody UserUpdateRequest request
   ) {
     return userHandler.update(id, request);
   }
