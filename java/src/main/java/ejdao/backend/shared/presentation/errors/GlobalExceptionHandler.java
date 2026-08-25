@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +27,22 @@ public class GlobalExceptionHandler {
     }
 
     return buildResponse(status, message, request);
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+    MethodArgumentNotValidException exception,
+    HttpServletRequest request
+  ) {
+    String message = exception
+      .getBindingResult()
+      .getFieldErrors()
+      .stream()
+      .findFirst()
+      .map(fieldError -> fieldError.getDefaultMessage())
+      .orElse("Validation failed.");
+
+    return buildResponse(HttpStatus.BAD_REQUEST, message, request);
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
